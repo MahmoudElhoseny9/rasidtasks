@@ -1,0 +1,74 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
+
+class CustomQuillField extends StatelessWidget {
+  final QuillController controller;
+
+  const CustomQuillField({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: Colors.grey,
+          ),
+        ),
+        child: Column(
+          children: [
+            // Quill Toolbar for rich text formatting
+            QuillSimpleToolbar(
+              controller: controller,
+              configurations: QuillSimpleToolbarConfigurations(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                showFontFamily: false,
+                showFontSize: false,
+                showDirection: false,
+                showBackgroundColorButton: false,
+                showHeaderStyle: false,
+                showJustifyAlignment: false,
+                showSearchButton: false,
+                showSubscript: false,
+                showDividers: false,
+                showCodeBlock: false,
+                showInlineCode: false,
+                showLeftAlignment: false,
+                showListCheck: false,
+                showQuote: false,
+                showUndo: false,
+                showSuperscript: false,
+                showStrikeThrough: false,
+                showIndent: false,
+                showRedo: false,
+                showLineHeightButton: false,
+                showSmallButton: false,
+                showRightAlignment: false,
+                showCenterAlignment: false,
+                showClearFormat: false,
+                showClipboardCopy: false,
+                showClipboardCut: false,
+                showClipboardPaste: false,
+                multiRowsDisplay: false,
+                toolbarSize: 35,
+              ),
+            ),
+            // QuillEditor for rich text input
+            QuillEditor.basic(
+              controller: controller,
+              readOnly: false, // Set to true if you want read-only editor
+              padding: const EdgeInsets.all(16),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
