@@ -23,7 +23,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
           ),
         );
 
-  /// Generate and save a PDF document
+  // Generate and save a PDF document
   Future<void> generatePDF({
     required String arabicContent,
     required String englishContent,
@@ -85,7 +85,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
     }
   }
 
-  /// Open the generated PDF within the app
+  // Open the generated PDF within the app
   Future<void> openPDF({required String filepath}) async {
     // Check if the platform is supported
     if (!Platform.isAndroid && !Platform.isIOS && !Platform.isWindows) {
@@ -105,7 +105,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
     }
   }
 
-  /// Share the generated PDF
+  // Share the generated PDF
   Future<void> sharePDF({required String filepath}) async {
     if (state.portfolios.isNotEmpty) {
       await Share.shareXFiles([XFile(filepath)]);
@@ -118,18 +118,24 @@ class PortfolioCubit extends Cubit<PortfolioState> {
     if (state.portfolios.isNotEmpty) {
       try {
         final outputDir = await getApplicationDocumentsDirectory();
-        final filePath = '${outputDir.path}/portfolio_downloaded.pdf';
+        final destinationPath =
+            '${outputDir.path}/portfolio_downloaded.pdf'; // Use a different variable name
 
         final file = File(filePath);
-        final newFile = await file.copy(filePath);
+        final newFile = await file.copy(destinationPath); // Copy to a new path
 
         log('PDF downloaded successfully: ${newFile.path}');
       } catch (e) {
         emit(state.copyWith(
-            errorMessage: 'Failed to download PDF: $e', isLoading: false));
+          errorMessage: 'Failed to download PDF: $e',
+          isLoading: false,
+        ));
       }
     } else {
-      emit(state.copyWith(errorMessage: 'No PDF available to download.'));
+      emit(state.copyWith(
+        errorMessage: 'No PDF available to download.',
+        isLoading: false, // Ensure loading state is updated
+      ));
     }
   }
 

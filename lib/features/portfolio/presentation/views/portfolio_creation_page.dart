@@ -32,6 +32,11 @@ class PortfolioCreationPageState extends State<PortfolioCreationPage> {
   @override
   void dispose() {
     super.dispose();
+    workExperienceController.dispose();
+    projectsController.dispose();
+    skillsController.dispose();
+    arabicContentController.dispose();
+    englishContentController.dispose();
   }
 
   @override
