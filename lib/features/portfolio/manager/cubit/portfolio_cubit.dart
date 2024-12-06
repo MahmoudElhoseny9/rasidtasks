@@ -7,6 +7,7 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:rasidtasks/core/constants/defaults.dart';
 import 'package:rasidtasks/features/portfolio/manager/model/portfolio_model.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -18,7 +19,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
           PortfolioState(
             isLoading: false,
             errorMessage: '',
-            pdfPath: '',
+            portfolios: [],
           ),
         );
 
@@ -71,7 +72,13 @@ class PortfolioCubit extends Cubit<PortfolioState> {
       final file = File(filePath);
       await file.writeAsBytes(await pdf.save());
 
-      emit(state.copyWith(pdfPath: filePath, isLoading: false));
+      emit(state.copyWith(
+          pdfPath: state.portfolios
+            ..add(Portfolio(
+                name: '${personalInfo['Name']} Portfolio',
+                filePath: filePath,
+                createdAt: DateTime.now())),
+          isLoading: false));
     } catch (e) {
       emit(state.copyWith(
           errorMessage: 'Failed to generate PDF: $e', isLoading: false));
@@ -79,7 +86,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
   }
 
   /// Open the generated PDF within the app
-  Future<void> openPDF() async {
+  Future<void> openPDF({required String filepath}) async {
     // Check if the platform is supported
     if (!Platform.isAndroid && !Platform.isIOS && !Platform.isWindows) {
       emit(state.copyWith(
@@ -87,54 +94,50 @@ class PortfolioCubit extends Cubit<PortfolioState> {
       return;
     }
 
-    if (state.pdfPath.isEmpty) {
+    if (state.portfolios.isEmpty) {
       emit(state.copyWith(errorMessage: 'No PDF file available to open.'));
       return;
     }
 
-    final result = await OpenFile.open(state.pdfPath);
+    final result = await OpenFile.open(filepath);
     if (result.type != ResultType.done) {
       emit(state.copyWith(errorMessage: 'Failed to open the PDF file.'));
     }
   }
 
   /// Share the generated PDF
-  Future<void> sharePDF() async {
-    if (state.pdfPath.isNotEmpty) {
-      await Share.shareXFiles([XFile(state.pdfPath)]);
+  Future<void> sharePDF({required String filepath}) async {
+    if (state.portfolios.isNotEmpty) {
+      await Share.shareXFiles([XFile(filepath)]);
     } else {
       emit(state.copyWith(errorMessage: 'No PDF available to share.'));
     }
   }
 
-  Future<void> downloadPDF() async {
-  if (state.pdfPath.isNotEmpty) {
-    try {
-      final outputDir = await getApplicationDocumentsDirectory();
-      final filePath = '${outputDir.path}/portfolio_downloaded.pdf';
+  Future<void> downloadPDF({required String filePath}) async {
+    if (state.portfolios.isNotEmpty) {
+      try {
+        final outputDir = await getApplicationDocumentsDirectory();
+        final filePath = '${outputDir.path}/portfolio_downloaded.pdf';
 
-      final file = File(state.pdfPath);
-      final newFile = await file.copy(filePath);
+        final file = File(filePath);
+        final newFile = await file.copy(filePath);
 
-      
-      emit(state.copyWith(
-          pdfPath: newFile.path, errorMessage: '', isLoading: false));
-      
-      log('PDF downloaded successfully: ${newFile.path}');
-    } catch (e) {
-      emit(state.copyWith(
-          errorMessage: 'Failed to download PDF: $e', isLoading: false));
+        log('PDF downloaded successfully: ${newFile.path}');
+      } catch (e) {
+        emit(state.copyWith(
+            errorMessage: 'Failed to download PDF: $e', isLoading: false));
+      }
+    } else {
+      emit(state.copyWith(errorMessage: 'No PDF available to download.'));
     }
-  } else {
-    emit(state.copyWith(errorMessage: 'No PDF available to download.'));
   }
-}
 
   /// Build the header for the PDF
   pw.Widget _buildHeader(pw.Context context) {
     return pw.Container(
       alignment: pw.Alignment.centerLeft,
-      padding: const pw.EdgeInsets.all(10),
+      padding: const pw.EdgeInsets.all(AppDefaults.padding8),
       child: pw.Text(
         'Portfolio',
         style: pw.TextStyle(
@@ -164,7 +167,7 @@ class PortfolioCubit extends Cubit<PortfolioState> {
   pw.Widget _buildSection(String title, String content,
       {bool isRtl = false, pw.Font? font}) {
     return pw.Padding(
-      padding: const pw.EdgeInsets.symmetric(vertical: 10),
+      padding: const pw.EdgeInsets.symmetric(vertical: AppDefaults.padding8),
       child: pw.Column(
         crossAxisAlignment:
             isRtl ? pw.CrossAxisAlignment.end : pw.CrossAxisAlignment.start,
@@ -184,11 +187,6 @@ class PortfolioCubit extends Cubit<PortfolioState> {
             content,
             textAlign: isRtl ? pw.TextAlign.right : pw.TextAlign.left,
             textDirection: isRtl ? pw.TextDirection.rtl : pw.TextDirection.ltr,
-            style: pw.TextStyle(
-              fontSize: 12,
-              color: PdfColors.black,
-              font: font, // Use the provided font (Arabic or English)
-            ),
           ),
         ],
       ),

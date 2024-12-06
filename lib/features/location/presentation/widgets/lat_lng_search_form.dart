@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rasidtasks/core/utils/colors.dart';
+import 'package:rasidtasks/core/constants/defaults.dart';
+import 'package:rasidtasks/core/constants/ghaps.dart';
 
 class LatLngSearchForm extends StatefulWidget {
   const LatLngSearchForm(
@@ -29,11 +30,9 @@ class _LatLngSearchFormState extends State<LatLngSearchForm> {
           TextFormField(
             controller: widget.latitudeController,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Latitude',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
+              border: AppDefaults.outlineInputBorder,
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -46,15 +45,13 @@ class _LatLngSearchFormState extends State<LatLngSearchForm> {
               return null;
             },
           ),
-          const SizedBox(height: 20),
+          gapH20,
           TextFormField(
             controller: widget.longitudeController,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Longitude',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
+              border: AppDefaults.outlineInputBorder,
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -67,11 +64,11 @@ class _LatLngSearchFormState extends State<LatLngSearchForm> {
               return null;
             },
           ),
-          const SizedBox(height: 20),
+          gapH20,
           ElevatedButton(
             onPressed: widget.handleSearch,
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.buttonColor,
+              // backgroundColor: AppColors.buttonColor,
               minimumSize: const Size.fromHeight(50),
             ),
             child: const Text('Search'),

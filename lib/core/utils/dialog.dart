@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rasidtasks/core/constants/defaults.dart';
 
 void showCustomDialog(BuildContext context, String message) {
   showDialog(
@@ -23,14 +24,14 @@ void showCustomBottomSheet(BuildContext context, Widget widget) {
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(AppDefaults.borderRadius)),
       ),
       builder: (context) {
         return Padding(
           padding: EdgeInsets.only(
-            top: 20,
-            left: 20,
-            right: 20,
+            top: AppDefaults.padding24,
+            left: AppDefaults.padding24,
+            right: AppDefaults.padding24,
             bottom: MediaQuery.of(context).viewInsets.bottom + 20,
           ),
           child: widget,

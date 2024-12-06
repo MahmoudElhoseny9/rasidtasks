@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rasidtasks/core/constants/defaults.dart';
+import 'package:rasidtasks/core/constants/ghaps.dart';
 import 'package:rasidtasks/features/notification/manager/cubit/notificatoin_cubit.dart';
 import 'package:rasidtasks/features/notification/presentation/widgets/date_time_picker.dart';
 import 'package:rasidtasks/features/notification/presentation/widgets/notification_input_field.dart';
@@ -9,7 +11,7 @@ import '../../manager/cubit/notificatoin_state.dart';
 
 class NotificationPage extends StatefulWidget {
   static const String routeName = '/notificationScreen';
-  
+
   const NotificationPage({super.key});
 
   @override
@@ -17,8 +19,6 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  
-  
   final TextEditingController titleController = TextEditingController();
   final TextEditingController bodyController = TextEditingController();
   DateTime? selectedDateTime;
@@ -94,12 +94,10 @@ class _NotificationPageState extends State<NotificationPage> {
           ),
         ),
         backgroundColor: Colors.greenAccent,
-        duration: const Duration(
-            seconds: 2), 
+        duration: const Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
         showCloseIcon: true,
-        margin: const EdgeInsets.all(
-            16),
+        margin: const EdgeInsets.all(16),
       ),
     );
   }
@@ -123,15 +121,15 @@ class _NotificationPageState extends State<NotificationPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(AppDefaults.padding16),
             child: Column(
               children: [
                 NotificationInputField(
                     controller: titleController, label: 'Title'),
-                const SizedBox(height: 10),
+                gapH12,
                 NotificationInputField(
                     controller: bodyController, label: 'Body'),
-                const SizedBox(height: 10),
+                gapH12,
                 DateTimePicker(
                   selectedDateTime: selectedDateTime,
                   onDateTimeSelected: (dateTime) {
@@ -140,7 +138,7 @@ class _NotificationPageState extends State<NotificationPage> {
                     });
                   },
                 ),
-                const SizedBox(height: 20),
+                gapH20,
                 BlocBuilder<NotificationCubit, NotificationState>(
                   builder: (context, state) {
                     return state.isLoading
@@ -152,7 +150,7 @@ class _NotificationPageState extends State<NotificationPage> {
                           );
                   },
                 ),
-                const SizedBox(height: 20),
+                gapH20,
                 BlocBuilder<NotificationCubit, NotificationState>(
                   builder: (context, state) {
                     if (state.isLoading) {

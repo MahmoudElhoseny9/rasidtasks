@@ -9,7 +9,5 @@ class Portfolio {
     required this.name,
     required this.filePath,
     required this.createdAt,
-    required String title,
-    required DateTime creationDate,
   });
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rasidtasks/core/constants/defaults.dart';
+import 'package:rasidtasks/core/constants/ghaps.dart';
 
 class AddressDisplayWidget extends StatelessWidget {
   const AddressDisplayWidget({super.key, required this.address});
@@ -8,10 +10,10 @@ class AddressDisplayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(AppDefaults.padding16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(AppDefaults.borderRadius),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -32,7 +34,7 @@ class AddressDisplayWidget extends StatelessWidget {
               color: Colors.blue,
             ),
           ),
-          const SizedBox(height: 8),
+          gapH8,
           Text(
             address,
             style: const TextStyle(
@@ -40,7 +42,7 @@ class AddressDisplayWidget extends StatelessWidget {
               color: Colors.black87,
             ),
           ),
-          const SizedBox(height: 16),
+          gapH16,
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rasidtasks/core/utils/colors.dart';
+import 'package:rasidtasks/core/constants/defaults.dart';
+import 'package:rasidtasks/core/constants/ghaps.dart';
 
 class GoogleMapsContent extends StatelessWidget {
   final TextEditingController searchController;
@@ -17,22 +18,22 @@ class GoogleMapsContent extends StatelessWidget {
           'Search',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 10),
+        gapH16,
         TextField(
           controller: searchController,
           decoration: InputDecoration(
             hintText: 'Enter google maps link',
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(AppDefaults.borderRadius),
             ),
             prefixIcon: const Icon(Icons.search),
           ),
         ),
-        const SizedBox(height: 20),
+        gapH20,
         ElevatedButton(
           onPressed: onPress,
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.buttonColor,
+            // backgroundColor: AppColors.buttonColor,
             minimumSize: const Size.fromHeight(50),
           ),
           child: const Text('Search'),

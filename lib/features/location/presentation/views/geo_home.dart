@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:rasidtasks/core/utils/utils.dart';
+import 'package:rasidtasks/core/utils/dialog.dart';
 import 'package:rasidtasks/features/location/manager/location_cubit/location_cubit.dart';
 import 'package:rasidtasks/features/location/presentation/widgets/address_display_widget.dart';
 import 'package:rasidtasks/features/location/presentation/widgets/google_maps_content.dart';
@@ -130,10 +130,12 @@ class _GeoHomePageState extends State<GeoHomePage> {
                   },
                 ));
           },
+          heroTag: null,
           child: const Icon(Icons.add_location),
         ),
         // Google maps
         FloatingActionButton(
+          heroTag: null,
           onPressed: () {
             showCustomBottomSheet(
               context,
@@ -154,6 +156,7 @@ class _GeoHomePageState extends State<GeoHomePage> {
         // Get Current Location
 
         FloatingActionButton(
+          heroTag: null,
           onPressed: () async {
             await context.read<LocationCubit>().getCurrentPosition();
           },

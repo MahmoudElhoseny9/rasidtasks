@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:rasidtasks/core/constants/defaults.dart';
 
 class StyledButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
-  final Color backgroundColor;
+  // final Color backgroundColor;
   final Color textColor;
   final bool isOutlined;
   final double borderRadius;
 
   const StyledButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.onPressed,
-    this.backgroundColor = Colors.blue,
+    // this.backgroundColor = Colors.blue,
     this.textColor = Colors.white,
     this.isOutlined = false,
     this.borderRadius = 12.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +27,15 @@ class StyledButton extends StatelessWidget {
           ? OutlinedButton(
               onPressed: onPressed,
               style: OutlinedButton.styleFrom(
-                side: BorderSide(color: backgroundColor),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: AppDefaults.padding16),
               ),
               child: Text(
                 label,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
-                  color: backgroundColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -44,11 +43,10 @@ class StyledButton extends StatelessWidget {
           : ElevatedButton(
               onPressed: onPressed,
               style: ElevatedButton.styleFrom(
-                backgroundColor: backgroundColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: AppDefaults.padding16),
               ),
               child: Text(
                 label,

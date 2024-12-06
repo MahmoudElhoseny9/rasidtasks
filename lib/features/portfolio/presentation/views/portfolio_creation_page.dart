@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rasidtasks/core/constants/defaults.dart';
+import 'package:rasidtasks/core/constants/ghaps.dart';
 import 'package:rasidtasks/features/portfolio/manager/cubit/portfolio_cubit.dart';
 import 'package:rasidtasks/features/portfolio/presentation/views/management_page.dart';
 import 'package:rasidtasks/features/portfolio/presentation/widgets/styled_button.dart';
@@ -28,6 +30,11 @@ class PortfolioCreationPageState extends State<PortfolioCreationPage> {
       TextEditingController();
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +50,7 @@ class PortfolioCreationPageState extends State<PortfolioCreationPage> {
         },
         builder: (context, state) {
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(AppDefaults.padding16),
             child: Form(
               key: _formKey,
               child: ListView(
@@ -77,6 +84,7 @@ class PortfolioCreationPageState extends State<PortfolioCreationPage> {
                     label: "English Content (LTR)",
                     controller: englishContentController,
                   ),
+                  gapH16,
                   StyledButton(
                     label: state.isLoading
                         ? "Generating porfgolios..."
@@ -98,9 +106,7 @@ class PortfolioCreationPageState extends State<PortfolioCreationPage> {
                             }
                           },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  gapH12,
                   StyledButton(
                     label: state.isLoading ? "Loading" : "Veiw portfolios",
                     onPressed: () =>

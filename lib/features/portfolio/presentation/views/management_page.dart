@@ -20,18 +20,23 @@ class PortfolioManagementPage extends StatelessWidget {
           if (state.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (state.pdfPath.isEmpty) {
+          if (state.portfolios.isEmpty) {
             return const Center(child: Text("No Portfolios Found."));
           }
           return ListView.builder(
-            itemCount: 1,
+            itemCount: state.portfolios.length,
             itemBuilder: (context, index) {
               return PortfolioCard(
-                title: "My Portfolio",
-                filePath: state.pdfPath,
-                onShare: () => context.read<PortfolioCubit>().sharePDF(),
-                onOpen: () => context.read<PortfolioCubit>().openPDF(),
-                onDownload: () => context.read<PortfolioCubit>().downloadPDF(),
+                portfolio: state.portfolios[index],
+                onShare: () => context
+                    .read<PortfolioCubit>()
+                    .sharePDF(filepath: state.portfolios[index].filePath),
+                onOpen: () => context
+                    .read<PortfolioCubit>()
+                    .openPDF(filepath: state.portfolios[index].filePath),
+                onDownload: () => context
+                    .read<PortfolioCubit>()
+                    .downloadPDF(filePath: state.portfolios[index].filePath),
               );
             },
           );

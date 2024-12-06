@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:rasidtasks/core/constants/defaults.dart';
 
 class CustomQuillField extends StatelessWidget {
-  final QuillController controller;
-
   const CustomQuillField({
     super.key,
-    required this.controller,
-  });
+    required QuillController controller,
+  }) : _controller = controller;
+
+  final QuillController _controller;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: AppDefaults.padding16),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppDefaults.borderRadius),
           border: Border.all(
             color: Colors.grey,
           ),
         ),
         child: Column(
           children: [
-            // Quill Toolbar for rich text formatting
             QuillSimpleToolbar(
-              controller: controller,
+              controller: _controller,
               configurations: QuillSimpleToolbarConfigurations(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(AppDefaults.borderRadius),
                 ),
                 showFontFamily: false,
                 showFontSize: false,
@@ -60,12 +60,13 @@ class CustomQuillField extends StatelessWidget {
                 toolbarSize: 35,
               ),
             ),
-            // QuillEditor for rich text input
             QuillEditor.basic(
-              controller: controller,
-              readOnly: false, // Set to true if you want read-only editor
-              padding: const EdgeInsets.all(16),
-            ),
+              configurations: const QuillEditorConfigurations(
+                enableInteractiveSelection: true,
+                padding: EdgeInsets.all(AppDefaults.padding16),
+              ),
+              controller: _controller,
+            )
           ],
         ),
       ),

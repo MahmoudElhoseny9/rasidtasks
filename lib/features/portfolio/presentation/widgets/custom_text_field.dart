@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rasidtasks/core/constants/defaults.dart';
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -17,7 +18,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: AppDefaults.padding8),
       child: TextField(
         controller: controller,
         onChanged: onChanged,
